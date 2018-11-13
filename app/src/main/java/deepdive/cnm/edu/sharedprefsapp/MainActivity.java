@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
+    if (savedInstanceState != null) {
+      dataInput.setText(savedInstanceState.getString(getString(R.string.bundle_key), ""));
+    }
+
     dataButton.setOnClickListener((view) -> {
       saveToSharedPrefs(dataInput.getText().toString());
       dataOutText.setText(getFromSharedPrefs());
@@ -46,5 +51,12 @@ public class MainActivity extends AppCompatActivity {
   private String getFromSharedPrefs(){
     SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
     return sharedPreferences.getString(getString(R.string.string_key), "");
+  }
+
+  @Override
+  protected void onSaveInstanceState(Bundle outState) {
+    Log.v("MainActivity","Saving State");
+    outState.putString(getString(R.string.bundle_key),dataInput.getText().toString());
+    super.onSaveInstanceState(outState);
   }
 }
