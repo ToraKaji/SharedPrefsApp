@@ -1,0 +1,4 @@
+<resources>
+  <string name="app_name" translatable="false">SharedPrefsApp</string>
+  <string name="string_key">FOO</string>
+</resources>
